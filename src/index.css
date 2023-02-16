@@ -1,44 +1,60 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;700&display=swap");
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-.page {
-  display: grid;
-  grid-template-areas: "nav";
+:root {
+  --primary: #1aac83;
+  --error: #e7195a;
+}
+body {
+  background: #f1f1f1;
+  margin: 0;
   font-family: "Open Sans", sans-serif;
 }
-.page__topnav {
-  grid-area: nav;
+header {
+  background: #fff;
 }
-
-.topnav {
-  color: #f8f9fa;
-  background-color: #212529;
-}
-.topnav__links {
+header .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 10px 20px;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.topnav__link-box {
-  flex: 1;
-  list-style: none;
-}
-.topnav__link-box:hover:not(.topnav__link-box.active) {
-  background-color: #343a40;
-}
-.topnav__link-box.active {
-  background-color: #d9480f;
-}
-.topnav__link {
-  color: inherit;
-  background: 0;
-  display: block;
-  text-align: center;
+header a {
+  color: #333;
   text-decoration: none;
-  padding: 15px;
+  margin-right: 10px;
+}
+.pages {
+  max-width: 1400px;
+  padding: 20px;
+  margin: 0 auto;
+}
+label,
+input {
+  display: block;
+}
+input {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+form button {
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  border-radius: 4px;
   cursor: pointer;
+}
+form {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 4px;
 }
