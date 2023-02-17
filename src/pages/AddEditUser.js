@@ -29,7 +29,9 @@ export default function AddEditUser() {
 
   useEffect(() => {
     id && getSingleUser();
-   
+    if(!id){
+      setData(initialState)
+    }
   }, [id]);
   const getSingleUser = async () => {
     const docRef = doc(db, "users", id);
