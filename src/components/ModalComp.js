@@ -33,7 +33,7 @@ export default function ModalComp({
               <p>{info}</p>
               <p>{contact}</p>
 
-              <button onClick={() => handleDelete(id)}>delete</button>
+              <button onClick={() => handleDelete(id)}>Delete</button>
             </div>
           </div>
         </div>
