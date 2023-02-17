@@ -49,7 +49,8 @@ const Home = () => {
     }
   }, [open]);
   const handleDelete = async (id) => {
-    try {
+   if(window.confirm("Are you sure to delete that user ?")){
+     try {
       setOpen(false);
       setUser({});
       await deleteDoc(doc(db, "users", id));
@@ -57,6 +58,7 @@ const Home = () => {
     } catch (err) {
       console.log(err);
     }
+   }
   };
   return (
     <div className="home">
