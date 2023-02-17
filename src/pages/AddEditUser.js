@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { storage } from "../firebase";
+import { storage, db } from "../firebase";
 import { useParams, useNavigate } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 let initialState = {
   name: "",
   email: "",
@@ -14,8 +15,9 @@ export default function AddEditUser() {
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(null);
   const [error, setError] = useState(null);
-  // const [isSubmit, setSubmit] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
   const [emptyFields, setEmptyFields] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const uploadFile = () => {
@@ -66,9 +68,15 @@ export default function AddEditUser() {
     if (!contact) empty.push("contact");
     setEmptyFields(empty);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     validate();
+    setIsSubmit(true);
+    await addDoc(collection(db, "users"), {
+      ...data,
+      timestamp: serverTimestamp(),
+    });
+    navigate("/")
   };
   return (
     <form onSubmit={handleSubmit}>
