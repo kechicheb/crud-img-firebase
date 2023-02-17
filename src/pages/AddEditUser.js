@@ -7,7 +7,8 @@ import {
   collection,
   getDoc,
   serverTimestamp,
-  doc
+  doc,
+  updateDoc
 } from "firebase/firestore";
 let initialState = {
   name: "",
@@ -28,11 +29,13 @@ export default function AddEditUser() {
 
   useEffect(() => {
     id && getSingleUser();
+   
   }, [id]);
   const getSingleUser = async () => {
     const docRef = doc(db, "users", id);
     const snapshot = await getDoc(docRef);
     if (snapshot.exists()) setData({ ...snapshot.data() });
+  
   };
 
   useEffect(() => {
@@ -88,15 +91,30 @@ export default function AddEditUser() {
     e.preventDefault();
     validate();
     setIsSubmit(true);
-    await addDoc(collection(db, "users"), {
-      ...data,
-      timestamp: serverTimestamp(),
-    });
+    if (!id) {
+      try {
+        await addDoc(collection(db, "users"), {
+          ...data,
+          timestamp: serverTimestamp(),
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }else {
+      try {
+        await updateDoc(doc(db, "users",id), {
+          ...data,
+          timestamp: serverTimestamp(),
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
     navigate("/");
   };
   return (
     <form onSubmit={handleSubmit}>
-      <h3>{id ? "Update":"Add"} user</h3>
+      <h3>{id ? "Update" : "Add"} user</h3>
       <label>Name:</label>
       <input
         type="text"
@@ -131,7 +149,7 @@ export default function AddEditUser() {
       />
       <label>Upload</label>
       <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-      <button disabled={progress !== null && progress < 100}>add user</button>
+      <button disabled={progress !== null && progress < 100}>Submit</button>
       {error && <div className="error">{error}</div>}
     </form>
   );

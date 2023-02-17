@@ -32,7 +32,7 @@ const Home = () => {
     <div className="home">
       {users &&
         users.map((item) => (
-          <div className="card">
+          <div className="card" key={item.id}>
             <img src={item.img} alt="Avatar" style={{ width: "100%" }} />
             <div className="container">
               <h4>
@@ -46,9 +46,9 @@ const Home = () => {
                   className="update btn"
                   onClick={() => navigate(`/update/${item.id}`)}
                 >
-                  update
+                  Update
                 </button>
-                <button className="view btn">view</button>
+                <button className="view btn">View</button>
               </div>
           </div>
         ))}
