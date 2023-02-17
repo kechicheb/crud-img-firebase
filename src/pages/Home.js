@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, doc, onSnapshot } from "firebase/firestore";
+import ModalComp from "../components/ModalComp";
 
 const Home = () => {
   const [users, setUsers] = useState([]);
+  const [user, setUser] = useState({});
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
@@ -28,6 +31,24 @@ const Home = () => {
     };
   }, []);
 
+  const handleModel = (item) => {
+    setOpen(true);
+    setUser(item);
+  };
+  useEffect(() => {
+    if (open) {
+      if (document.querySelector(".overlay")) {
+        document.querySelector(".overlay").style.visibility = "visible;";
+        document.querySelector(".overlay").style.opacity = "1";
+      }
+    } else {
+      if (document.querySelector(".overlay")) {
+        document.querySelector(".overlay").style.visibility = "hidden";
+        document.querySelector(".overlay").style.opacity = "0";
+      }
+    }
+  }, [open]);
+
   return (
     <div className="home">
       {users &&
@@ -39,19 +60,34 @@ const Home = () => {
                 <b>{item.name}</b>
               </h4>
               <p>{item.email}</p>
-              
             </div>
             <div className="btns">
-                <button
-                  className="update btn"
-                  onClick={() => navigate(`/update/${item.id}`)}
-                >
-                  Update
-                </button>
-                <button className="view btn">View</button>
-              </div>
+              <button
+                className="update btn"
+                onClick={() => navigate(`/update/${item.id}`)}
+              >
+                Update
+              </button>
+              <button
+                className="view btn"
+                onClick={() => {
+                  handleModel(item);
+                }}
+              >
+                View
+              </button>
+            </div>
           </div>
         ))}
+      {open && (
+        <ModalComp
+          open={open}
+          setOpen={setOpen}
+          setUser={setUser}
+          handleDelete={() => console.log("delete")}
+          {...user}
+        />
+      )}
     </div>
   );
 };

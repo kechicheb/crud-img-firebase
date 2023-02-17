@@ -5,7 +5,7 @@ export default function Navbar() {
     <header>
       <div className="container">
         <Link to="/">
-          <h1>crud image Firebase</h1>
+          <h3>crud image Firebase</h3>
         </Link>
         <nav>
           <div>
