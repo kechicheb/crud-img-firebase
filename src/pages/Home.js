@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import { collection, doc, onSnapshot } from "firebase/firestore";
+import { deleteDoc, collection, doc, onSnapshot } from "firebase/firestore";
 import ModalComp from "../components/ModalComp";
 
 const Home = () => {
@@ -48,7 +48,16 @@ const Home = () => {
       }
     }
   }, [open]);
-
+  const handleDelete = async (id) => {
+    try {
+      setOpen(false);
+      setUser({});
+      await deleteDoc(doc(db, "users", id));
+      setUsers(users.filter((user) => user.id !== id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="home">
       {users &&
@@ -84,7 +93,7 @@ const Home = () => {
           open={open}
           setOpen={setOpen}
           setUser={setUser}
-          handleDelete={() => console.log("delete")}
+          handleDelete={handleDelete}
           {...user}
         />
       )}
