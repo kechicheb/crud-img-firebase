@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { storage, db } from "../firebase";
 import { useParams, useNavigate } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDoc,
+  serverTimestamp,
+  doc
+} from "firebase/firestore";
 let initialState = {
   name: "",
   email: "",
@@ -18,6 +24,16 @@ export default function AddEditUser() {
   const [isSubmit, setIsSubmit] = useState(false);
   const [emptyFields, setEmptyFields] = useState([]);
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  useEffect(() => {
+    id && getSingleUser();
+  }, [id]);
+  const getSingleUser = async () => {
+    const docRef = doc(db, "users", id);
+    const snapshot = await getDoc(docRef);
+    if (snapshot.exists()) setData({ ...snapshot.data() });
+  };
 
   useEffect(() => {
     const uploadFile = () => {
@@ -76,11 +92,11 @@ export default function AddEditUser() {
       ...data,
       timestamp: serverTimestamp(),
     });
-    navigate("/")
+    navigate("/");
   };
   return (
     <form onSubmit={handleSubmit}>
-      <h3>add user</h3>
+      <h3>{id ? "Update":"Add"} user</h3>
       <label>Name:</label>
       <input
         type="text"

@@ -9,8 +9,8 @@ export default function Navbar() {
         </Link>
         <nav>
           <div>
-            <Link to="/add">add</Link>
-            <Link to="/update">update</Link>
+            <Link to="/add" className="add">Add user</Link>
+      
           </div>
         </nav>
       </div>
