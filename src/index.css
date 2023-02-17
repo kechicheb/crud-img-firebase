@@ -45,6 +45,7 @@ nav .add {
   max-width: 1400px;
   padding: 20px;
   margin: 0 auto;
+ 
 }
 label,
 input {
@@ -80,7 +81,7 @@ form button:hover {
 }
 form {
   max-width: 400px;
-  margin: 40px auto;
+  margin: 40px auto 0;
   padding: 20px;
   background: #fff;
   border-radius: 4px;
@@ -190,12 +191,12 @@ input.error {
   position: relative;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   transition: all 5s ease-in-out;
-  -webkit-transform: translate(-50%,-50%);
-  -moz-transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
-  -o-transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
   -webkit-transition: all 5s ease-in-out;
   -moz-transition: all 5s ease-in-out;
   -ms-transition: all 5s ease-in-out;
@@ -256,7 +257,6 @@ input.error {
 }
 
 @media screen and (max-width: 700px) {
-
   .popup .content .info {
     grid-template-columns: 1fr !important;
     gap: 30px;
@@ -267,6 +267,35 @@ input.error {
   .popup {
     width: 70%;
   }
+}
+
+
+/* loader */
+
+
+.perantLoader {
+  height: calc(100vh - 200px);
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #333;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
 
 }
 
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

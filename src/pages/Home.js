@@ -3,6 +3,7 @@ import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { deleteDoc, collection, doc, onSnapshot } from "firebase/firestore";
 import ModalComp from "../components/ModalComp";
+import Spinner from "../components/Spinner";
 
 const Home = () => {
   const [users, setUsers] = useState([]);
@@ -49,17 +50,20 @@ const Home = () => {
     }
   }, [open]);
   const handleDelete = async (id) => {
-   if(window.confirm("Are you sure to delete that user ?")){
-     try {
-      setOpen(false);
-      setUser({});
-      await deleteDoc(doc(db, "users", id));
-      setUsers(users.filter((user) => user.id !== id));
-    } catch (err) {
-      console.log(err);
+    if (window.confirm("Are you sure to delete that user ?")) {
+      try {
+        setOpen(false);
+        setUser({});
+        await deleteDoc(doc(db, "users", id));
+        setUsers(users.filter((user) => user.id !== id));
+      } catch (err) {
+        console.log(err);
+      }
     }
-   }
   };
+  if (loading) {
+    return <Spinner />;
+  }
   return (
     <div className="home">
       {users &&
